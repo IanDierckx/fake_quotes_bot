@@ -19,7 +19,7 @@ def run_bot():
 
     for submission in subreddit.new(limit=10):
         if submission.id not in posts_replied_to:
-            if re.search("\"test quote\" - Mister Test", submission.title, re.IGNORECASE):
+            if re.search("[\"\'][\w \.]*[\"\'] - [\w \.]*", submission.title, re.IGNORECASE):
                 submission.reply("\"Fake Quote\" - Mrs. Test")
                 print("Bot replying to : ", submission.title)
                 posts_replied_to.append(submission.id)
