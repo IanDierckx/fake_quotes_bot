@@ -51,8 +51,9 @@ def run_bot():
                     posts_replied_to.append(comment.id)
         if submission.id not in posts_replied_to:
             if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", submission.title, re.IGNORECASE):
-                reply = submission.reply("\"Fake Quote on post.\" - Mrs. Test")
-                print("Bot replying to post: ", submission.title, "by ", submission.author, " with ", randomQuote)
+                randomQuote = get_random_quote(quotes, quoters)
+                reply = submission.reply(randomQuote)
+                print("Bot replying to comment: ", submission.body, "by ", submission.author, " with ", randomQuote)
                 posts_replied_to.append(submission.id)
                 posts_replied_to.append(reply.id)
 
