@@ -5,24 +5,6 @@ import re
 import os
 
 
-# Function to import fake quotes from external file
-def import_quotes():
-    with open("quotes.txt") as file:
-        quotes = file.read()
-        quotes = quotes.split("\n")
-        quotes = list(filter(None, quotes))
-        return quotes
-
-
-# Function to import quoters from an external file
-def import_quoters():
-    with open("quoters.txt") as file:
-        quoters = file.read()
-        quoters = quoters.split("\n")
-        quoters = list(filter(None, quoters))
-        return quoters
-
-
 # Function to generate a random fake quote from the imported quotes and quoters
 def get_random_quote(quotes, quoters):
     quote = quotes[randrange(len(quotes))]
@@ -49,6 +31,19 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
             posts_replied_to.append(reply.id)
 
 
+# Function will read a file, import the data into a list, remove duplicates and write the duplicateless list back to
+# file while returning the list as well
+def import_and_remove_duplicates(filename):
+    with open(filename) as file:
+        data = file.read()
+        data = data.split("\n")
+        data = list(set(filter(None, data)))
+    with open(filename, "w") as file:
+        for line in data:
+            file.write(line + "\n")
+        return data
+
+
 # Function that runs the actual bot
 def run_bot():
     # Get a reddit instance using the data given in the local praw.ini file. File not added to git to prevent sharing
@@ -57,8 +52,8 @@ def run_bot():
 
     subreddit = reddit.subreddit("BotTestingPlace")
 
-    quotes = import_quotes()
-    quoters = import_quoters()
+    quotes = import_and_remove_duplicates("quotes.txt")
+    quoters = import_and_remove_duplicates("quoters.txt")
 
     # First check if the replied to file already exists or not. If it does import the ids into a list, otherwise make
     # an empty list
