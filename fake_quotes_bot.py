@@ -44,13 +44,13 @@ def run_bot():
     for submission in subreddit.new(limit=10):
         for comment in submission.comments:
             if comment.id not in posts_replied_to:
-                if re.search("[\"\'][\w \.]*[\"\'] - [\w \.]*", comment.body, re.IGNORECASE):
+                if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", comment.body, re.IGNORECASE):
                     randomQuote = get_random_quote(quotes, quoters)
                     comment.reply(randomQuote)
                     print("Bot replying to comment: ", comment.body, "by ", comment.author, " with ", randomQuote)
                     posts_replied_to.append(comment.id)
         if submission.id not in posts_replied_to:
-            if re.search("[\"\'][\w \.]*[\"\'] - [\w \.]*", submission.title, re.IGNORECASE):
+            if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", submission.title, re.IGNORECASE):
                 reply = submission.reply("\"Fake Quote on post.\" - Mrs. Test")
                 print("Bot replying to post: ", submission.title, "by ", submission.author, " with ", randomQuote)
                 posts_replied_to.append(submission.id)
