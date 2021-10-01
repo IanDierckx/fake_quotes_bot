@@ -1,3 +1,4 @@
+import sys
 from random import randrange
 import praw
 import re
@@ -30,6 +31,24 @@ def get_random_quote(quotes, quoters):
     return quote
 
 
+# Function to reply to a post (or comment) with a randomly generated fake quote
+def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
+    if type_of_post == "comment":
+        text = post.body
+    elif type_of_post == "post":
+        text = post.title
+    else:
+        print("Unexpected type of post\n", file=sys.stderr)
+        text = ""
+    if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", text, re.IGNORECASE):
+        random_quote = get_random_quote(quotes, quoters)
+        reply = post.reply(random_quote)
+        print("Bot replying to comment: ", text, "by ", post.author, " with ", random_quote)
+        posts_replied_to.append(post.id)
+        if type_of_post == "post":
+            posts_replied_to.append(reply.id)
+
+
 # Function that runs the actual bot
 def run_bot():
     # Get a reddit instance using the data given in the local praw.ini file. File not added to git to prevent sharing
@@ -55,18 +74,9 @@ def run_bot():
     for submission in subreddit.new(limit=10):
         for comment in submission.comments:
             if comment.id not in posts_replied_to:
-                if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", comment.body, re.IGNORECASE):
-                    randomQuote = get_random_quote(quotes, quoters)
-                    comment.reply(randomQuote)
-                    print("Bot replying to comment: ", comment.body, "by ", comment.author, " with ", randomQuote)
-                    posts_replied_to.append(comment.id)
+                reply_to("comment", comment, quotes, quoters, posts_replied_to)
         if submission.id not in posts_replied_to:
-            if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", submission.title, re.IGNORECASE):
-                randomQuote = get_random_quote(quotes, quoters)
-                reply = submission.reply(randomQuote)
-                print("Bot replying to comment: ", submission.body, "by ", submission.author, " with ", randomQuote)
-                posts_replied_to.append(submission.id)
-                posts_replied_to.append(reply.id)
+            reply_to("post", submission, quotes, quoters, posts_replied_to)
 
     # Update the replied to text file to make sure you don't reply again when the bot is run again.
     with open("posts_replied_to.txt", "w") as file:
