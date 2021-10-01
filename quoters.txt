@@ -38,3 +38,177 @@ Venus Williams
 Houdini
 Stephen King
 Jennifer Lopez
+Jack Black
+Rick Sanchez
+Hillary Duff
+Khloe Kardashian
+Kim Kardashian
+Principal Seymore Skinner
+Piglet
+Marge Simpson
+Tweety
+Dr. Doofenshmirtz
+Phillip J. Fry
+Goofy
+Homer Simpson
+Cruella de Vil
+The Joker
+Batman
+Bugs Bunny
+Kristen Bell
+Chris Hansen
+Leonardo DiCaprio
+Cameron Diaz
+Will Smith
+Lady Gaga
+Miley Cyrus
+Maya Angelou
+Albert Einstein
+Justin Bieber
+John Bon Jovi
+Stephen Hawking
+Helen Keller
+Noah
+Daniel Radcliffe
+Harry Potter
+Napoleon Bonaparte
+Walt Disney
+George Washington
+Tiger Woods
+Steven Spielberg
+Martin Luther King, Jr.
+Oscar Wilde
+Morgan Freeman
+Fidel Castro
+Freddie Mercury
+Arnold Schwarzenegger
+Robert De Niro
+Elvis Presley
+Hulk Hogan
+Steve Jobs
+Eminem
+Winston Churchill
+Bob Marley
+Moses
+Mark Twain
+C. S. Lewis
+Ryan Reynolds
+Neil Armstrong
+Scarlett Johansson
+Katy Perry
+Simon Cowell
+Mother Teresa
+Kobe Bryant
+Alexander the Great
+Steve Carell
+Pewdiepie
+Jacksepticeye
+Queen Latifah
+Emma Watson
+Bruce Springsteen
+Leonardo da Vinci
+Muhammad Ali
+Roman Atwood
+Ian Hecox
+Tyler Oakley
+Shane Dawson
+Rosanna Pansino
+MrBeast
+Markiplier
+Jake Paul
+Logan Paul
+Ninja
+Liza Koshy
+KSI
+Coyote Peterson
+Gus Johnson
+Jenna Marbles
+Trisha Paytas
+Adolf Hitler
+Jaiden Animations
+Lilly Singh
+James Charles
+Link
+Zelda
+Sonic
+Mario
+Luigi
+Solid Snake
+Amanda Ripley
+Chun-Li
+Ramsay Bolton
+Tyrion Lannister
+Jaime Lannister
+Robert Baratheon
+Theon Greyjoy
+Sansa Stark
+Stannis Baratheon
+John Snow
+Daryl Dixon
+Rick Grimes
+Carl Grimes
+Obi-Wan
+Han Solo
+Darth Vader
+Darth Maul
+Hulk
+Black Widow
+Loki
+Thor
+John McLane
+Ellen Ripley
+Aragorn
+Captain Kirk
+Jack Sparrow
+Ferris Bueller
+Vincent Vega
+Mia Wallace
+Eddie Murphy
+Woody Harrelson
+Steve Buscemi
+Willem Dafoe
+Andrew Garfield
+Tom Holland
+Neil Patrick Harris
+Ian McKellen
+Chris Hemsworth
+Edgar Allan Poe
+J.R.R. Tolkien
+Charles Dickens
+Ernest Hemingway
+Jane Austen
+Jules Verne
+H.P. Lovecraft
+Rihanna
+Lil Nas X
+Adele
+Mariah Carey
+Janet Jackson
+Gloria Estefan
+DJ Khaled
+Megan Thee Stallion
+Billie Eilish
+Ed Sheeran
+Bruno Mars
+Prince
+Lizzo
+Ariana Grande
+Madonna
+Cardi B
+Queen Elizabeth II
+Bagheera
+Simba
+Kronk
+Pinocchio
+Mulan
+Ariel
+Scrooge McDuck
+Mushu
+Christopher Robin
+Snow White
+Winnie the Pooh
+Mickey Mouse
+Minnie Mouse
+Cinderella
+Zeus
+Hercules
