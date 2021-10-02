@@ -24,7 +24,10 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
         text = ""
     if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", text, re.IGNORECASE):
         random_quote = get_random_quote(quotes, quoters)
-        reply = post.reply(random_quote)
+        reply = post.reply(random_quote
+                           + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
+                             "have actually said it."
+                             "\nThis bot was made by u/DarkwoodDragon if you have any notes, please let them know.")
         print("Bot replying to comment: ", text, "by ", post.author, " with ", random_quote)
         posts_replied_to.append(post.id)
         if type_of_post == "post":
