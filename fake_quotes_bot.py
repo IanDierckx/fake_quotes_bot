@@ -27,11 +27,10 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
         reply = post.reply(random_quote
                            + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
                              "have actually said it."
-                             "\nThis bot was made by u/DarkwoodDragon if you have any notes, please let them know.")
+                             "\n\nThis bot was made by u/DarkwoodDragon if you have any notes, please let them know.")
         print("Bot replying to comment: ", text, "by ", post.author, " with ", random_quote)
         posts_replied_to.append(post.id)
-        if type_of_post == "post":
-            posts_replied_to.append(reply.id)
+        posts_replied_to.append(reply.id)
 
 
 # Function will read a file, import the data into a list, remove duplicates and write the duplicateless list back to
@@ -46,6 +45,16 @@ def import_and_remove_duplicates(filename):
             file.write(line + "\n")
         return data
 
+
+def reply_to_comment_and_subcomments(comment, quotes, quoters, posts_replied_to):
+    if comment.id not in posts_replied_to:
+        reply_to("comment", comment, quotes, quoters, posts_replied_to)
+    if comment.replies is None:
+        return
+    else:
+        for subcomment in comment.replies:
+            reply_to_comment_and_subcomments(subcomment, quotes, quoters, posts_replied_to)
+    
 
 # Function that runs the actual bot
 def run_bot():
@@ -71,8 +80,7 @@ def run_bot():
     # Loop over the then newest posts in the subreddit to check for posts and comments to reply to
     for submission in subreddit.new(limit=10):
         for comment in submission.comments:
-            if comment.id not in posts_replied_to:
-                reply_to("comment", comment, quotes, quoters, posts_replied_to)
+            reply_to_comment_and_subcomments(comment, quotes, quoters, posts_replied_to)
         if submission.id not in posts_replied_to:
             reply_to("post", submission, quotes, quoters, posts_replied_to)
 
