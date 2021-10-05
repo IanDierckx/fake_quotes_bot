@@ -22,7 +22,8 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
     else:
         print("Unexpected type of post\n", file=sys.stderr)
         text = ""
-    if re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", text, re.IGNORECASE):
+    if re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", text, re.IGNORECASE) or \
+            (type_of_post == "post" and re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", post.selftext, re.IGNORECASE)):
         random_quote = get_random_quote(quotes, quoters)
         reply = post.reply(random_quote
                            + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
