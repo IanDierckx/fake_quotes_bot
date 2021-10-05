@@ -22,7 +22,7 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
     else:
         print("Unexpected type of post\n", file=sys.stderr)
         text = ""
-    if re.search("[\"\'][\w \.?!]*[\"\'] - [\w \.?!]*", text, re.IGNORECASE):
+    if re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", text, re.IGNORECASE):
         random_quote = get_random_quote(quotes, quoters)
         reply = post.reply(random_quote
                            + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
@@ -33,7 +33,7 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
         posts_replied_to.append(reply.id)
 
 
-# Function will read a file, import the data into a list, remove duplicates and write the duplicateless list back to
+# Function will read a file, import the data into a list, remove duplicates and write the duplicate-less list back to
 # file while returning the list as well
 def import_and_remove_duplicates(filename):
     with open(filename) as file:
