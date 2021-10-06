@@ -19,17 +19,20 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
         text = post.body
     elif type_of_post == "post":
         text = post.title
+    elif type_of_post == "mention":
+        text = post.body
     else:
         print("Unexpected type of post\n", file=sys.stderr)
         text = ""
     if re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", text, re.IGNORECASE) or \
-            (type_of_post == "post" and re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", post.selftext, re.IGNORECASE)):
+            (type_of_post == "post" and re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", post.selftext, re.IGNORECASE)) or \
+            (type_of_post == "mention"):
         random_quote = get_random_quote(quotes, quoters)
         reply = post.reply(random_quote
                            + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
                              "have actually said it."
                              "\n\nThis bot was made by u/DarkwoodDragon if you have any notes, please let them know.")
-        print("Bot replying to comment: ", text, "by ", post.author, " with ", random_quote)
+        print("Bot replying to ", type_of_post, ": ", text, "by ", post.author, " with ", random_quote)
         posts_replied_to.append(post.id)
         posts_replied_to.append(reply.id)
 
@@ -84,6 +87,11 @@ def run_bot():
             reply_to_comment_and_subcomments(comment, quotes, quoters, posts_replied_to)
         if submission.id not in posts_replied_to:
             reply_to("post", submission, quotes, quoters, posts_replied_to)
+
+    for mention in reddit.inbox.mentions(limit=10):
+        if mention.id not in posts_replied_to:
+            print(f"{mention.author}\n{mention.body}\n")
+            reply_to("mention", mention, quotes, quoters, posts_replied_to)
 
     # Update the replied to text file to make sure you don't reply again when the bot is run again.
     with open("posts_replied_to.txt", "w") as file:
