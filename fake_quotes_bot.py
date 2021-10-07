@@ -4,9 +4,12 @@ import praw
 import re
 import os
 
+quotes = []
+quoters = []
+
 
 # Function to generate a random fake quote from the imported quotes and quoters
-def get_random_quote(quotes, quoters):
+def get_random_quote():
     quote = quotes[randrange(len(quotes))]
     quote += " - "
     quote += quoters[randrange(len(quoters))]
@@ -14,7 +17,7 @@ def get_random_quote(quotes, quoters):
 
 
 # Function to reply to a post (or comment) with a randomly generated fake quote
-def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
+def reply_to(type_of_post, post, posts_replied_to):
     if type_of_post == "comment":
         text = post.body
     elif type_of_post == "post":
@@ -27,7 +30,7 @@ def reply_to(type_of_post, post, quotes, quoters, posts_replied_to):
     if re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", text, re.IGNORECASE) or \
             (type_of_post == "post" and re.search("[\"\'][\w .?!]*[\"\'] - [\w .?!]*", post.selftext, re.IGNORECASE)) or \
             (type_of_post == "mention"):
-        random_quote = get_random_quote(quotes, quoters)
+        random_quote = get_random_quote()
         reply = post.reply(random_quote
                            + "\n\n This quote is randomly generated and the person quoted will (most likely) never "
                              "have actually said it."
@@ -50,15 +53,15 @@ def import_and_remove_duplicates(filename):
         return data
 
 
-def reply_to_comment_and_subcomments(comment, quotes, quoters, posts_replied_to):
+def reply_to_comment_and_subcomments(comment, posts_replied_to):
     if comment.id not in posts_replied_to:
-        reply_to("comment", comment, quotes, quoters, posts_replied_to)
+        reply_to("comment", comment, posts_replied_to)
     if comment.replies is None:
         return
     else:
         for subcomment in comment.replies:
-            reply_to_comment_and_subcomments(subcomment, quotes, quoters, posts_replied_to)
-    
+            reply_to_comment_and_subcomments(subcomment, posts_replied_to)
+
 
 # Function that runs the actual bot
 def run_bot():
@@ -68,7 +71,9 @@ def run_bot():
 
     subreddit = reddit.subreddit("BotTestingPlace")
 
+    global quotes
     quotes = import_and_remove_duplicates("quotes.txt")
+    global quoters
     quoters = import_and_remove_duplicates("quoters.txt")
 
     # First check if the replied to file already exists or not. If it does import the ids into a list, otherwise make
@@ -84,14 +89,14 @@ def run_bot():
     # Loop over the then newest posts in the subreddit to check for posts and comments to reply to
     for submission in subreddit.new(limit=10):
         for comment in submission.comments:
-            reply_to_comment_and_subcomments(comment, quotes, quoters, posts_replied_to)
+            reply_to_comment_and_subcomments(comment, posts_replied_to)
         if submission.id not in posts_replied_to:
-            reply_to("post", submission, quotes, quoters, posts_replied_to)
+            reply_to("post", submission, posts_replied_to)
 
     for mention in reddit.inbox.mentions(limit=10):
         if mention.id not in posts_replied_to:
             print(f"{mention.author}\n{mention.body}\n")
-            reply_to("mention", mention, quotes, quoters, posts_replied_to)
+            reply_to("mention", mention, posts_replied_to)
 
     # Update the replied to text file to make sure you don't reply again when the bot is run again.
     with open("posts_replied_to.txt", "w") as file:
