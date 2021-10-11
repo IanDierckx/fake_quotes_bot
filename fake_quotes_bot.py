@@ -68,8 +68,7 @@ def run_bot():
     # Get a reddit instance using the data given in the local praw.ini file. File not added to git to prevent sharing
     # of secret data
     reddit = praw.Reddit('bot1')
-
-    subreddit = reddit.subreddit("BotTestingPlace")
+    subreddits = import_and_remove_duplicates("subreddits.txt")
 
     global quotes
     quotes = import_and_remove_duplicates("quotes.txt")
@@ -86,12 +85,14 @@ def run_bot():
             posts_replied_to = posts_replied_to.split("\n")
             posts_replied_to = list(filter(None, posts_replied_to))
 
-    # Loop over the then newest posts in the subreddit to check for posts and comments to reply to
-    for submission in subreddit.new(limit=10):
-        for comment in submission.comments:
-            reply_to_comment_and_subcomments(comment, posts_replied_to)
-        if submission.id not in posts_replied_to:
-            reply_to("post", submission, posts_replied_to)
+    for sub in subreddits:
+        subreddit = reddit.subreddit(sub)
+        # Loop over the then newest posts in the subreddit to check for posts and comments to reply to
+        for submission in subreddit.new(limit=10):
+            for comment in submission.comments:
+                reply_to_comment_and_subcomments(comment, posts_replied_to)
+            if submission.id not in posts_replied_to:
+                reply_to("post", submission, posts_replied_to)
 
     for mention in reddit.inbox.mentions(limit=10):
         if mention.id not in posts_replied_to:
