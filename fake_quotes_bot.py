@@ -59,7 +59,8 @@ def reply_to_comment_and_subcomments(comment, posts_replied_to):
     if comment.replies is None:
         return
     else:
-        for subcomment in comment.replies.replace_more(limit=None):
+        comment.replies.replace_more(limit=None)
+        for subcomment in comment.replies:
             reply_to_comment_and_subcomments(subcomment, posts_replied_to)
 
 
@@ -89,7 +90,8 @@ def run_bot():
         subreddit = reddit.subreddit(sub)
         # Loop over the then newest posts in the subreddit to check for posts and comments to reply to
         for submission in subreddit.new(limit=10):
-            for comment in submission.comments.replace_more(limit=None):
+            submission.comments.replace_more()
+            for comment in submission.comments:
                 reply_to_comment_and_subcomments(comment, posts_replied_to)
             if submission.id not in posts_replied_to:
                 reply_to("post", submission, posts_replied_to)
